@@ -1,0 +1,4 @@
+Name|Difficulty|Level
+Charlotte|Easy|22
+Charlotte|Hard|10
+Charlotte|Normal|24
