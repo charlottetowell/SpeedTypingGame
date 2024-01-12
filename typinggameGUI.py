@@ -16,7 +16,7 @@ def starting_screen():
     global difficulty
         #define window layout
     layout = [ [sg.Text("Typing Game", justification = "center")],
-            [sg.Text("Press below to start")],
+            [sg.Text("Choose difficulty to start")],
             [sg.Button('Easy'), sg.Button('Normal'), sg.Button('Hard')],
             [sg.Button('View High Scores'), sg.Button('Quit')] ]
     window = sg.Window('Typing Game', layout)
@@ -48,9 +48,12 @@ def gameplay():
     layout = [ [sg.Text(f"LEVEL {level}", key = "level_counter")],
             [sg.Text("", key="string_to_type")],
             [sg.Input("",     key='Input1')],
-            [sg.Text("", key="stopwatch")]]
+            [sg.Text("", key="stopwatch")],
+            [sg.Graph(canvas_size=(315, 10), graph_bottom_left=(0,0), graph_top_right=(100, 10), background_color='white', key='graph')]
+            ]
     window = sg.Window('Typing Game', layout, finalize=True)
     window['Input1'].bind("<Return>", "_Enter") #set enter key to be submit
+    graph = window['graph']
 
 
     while running:
@@ -74,13 +77,14 @@ def gameplay():
         window["string_to_type"].update(f"Type the following characters:\n{string_to_type}")
         window['Input1'].update("")
 
-        level_start = default_timer()
         counter = 0
         while True:
             event, values = window.read(timeout=10)
 
             #timer
             time_left = time_allowed - counter
+            percent = round((time_left / time_allowed) * 100)
+            rectangle = graph.DrawRectangle((0,0), (percent,10), line_color='purple') 
             window['stopwatch'].update('{:02f}:{:02f}.{:02f}'.format((time_left // 100) // 60, (time_left // 100) % 60, time_left % 100))
             counter += 1
         
@@ -105,8 +109,7 @@ def gameplay():
 def game_over():
     global level
 
-    layout = [ [sg.Text("GAME OVER")],c
-
+    layout = [ [sg.Text("GAME OVER")],
     [sg.Text(f"You reached level {level}")],
     [sg.Button('Quit'), sg.Button('Save Score'), sg.Button('Play Again')]
     ]
