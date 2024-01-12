@@ -48,12 +48,11 @@ def gameplay():
     layout = [ [sg.Text(f"LEVEL {level}", key = "level_counter")],
             [sg.Text("", key="string_to_type")],
             [sg.Input("",     key='Input1')],
-            [sg.Text("", key="stopwatch")],
-            [sg.Graph(canvas_size=(315, 10), graph_bottom_left=(0,0), graph_top_right=(100, 10), background_color='white', key='graph')]
+        #    [sg.Text("", key="stopwatch")],
+            [sg.ProgressBar(100, orientation='h',size=(24.5,20), key='countdown')]
             ]
     window = sg.Window('Typing Game', layout, finalize=True)
     window['Input1'].bind("<Return>", "_Enter") #set enter key to be submit
-    graph = window['graph']
 
 
     while running:
@@ -84,8 +83,8 @@ def gameplay():
             #timer
             time_left = time_allowed - counter
             percent = round((time_left / time_allowed) * 100)
-            rectangle = graph.DrawRectangle((0,0), (percent,10), line_color='purple') 
-            window['stopwatch'].update('{:02f}:{:02f}.{:02f}'.format((time_left // 100) // 60, (time_left // 100) % 60, time_left % 100))
+            window['countdown'].update(percent)
+        #    window['stopwatch'].update('{:02f}:{:02f}.{:02f}'.format((time_left // 100) // 60, (time_left // 100) % 60, time_left % 100))
             counter += 1
         
             if event == sg.WINDOW_CLOSED:
