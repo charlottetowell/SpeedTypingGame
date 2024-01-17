@@ -15,7 +15,7 @@ highscores = pd.read_csv("highscores.txt", sep="|")
 def starting_screen():
     global difficulty
         #define window layout
-    layout = [ [sg.Text("Typing Game", justification = "center")],
+    layout = [ [sg.Text("Speed Typing Game", justification = "center")],
             [sg.Text("Choose difficulty to start")],
             [sg.Button('Easy'), sg.Button('Normal'), sg.Button('Hard')],
             [sg.Button('View High Scores'), sg.Button('Quit')] ]
@@ -135,7 +135,7 @@ def save_score():
     layout= [
         [sg.Text(f"You reached level {level} at {difficulty} difficulty")],
         [sg.Text("Enter Name: "), sg.Input("", key='name')],
-        [sg.Button("Save Score")]
+        [sg.Button("Save Score"), sg.Button("Cancel")]
     ]
     window = sg.Window('Save Score', layout)
     while True:
@@ -147,6 +147,9 @@ def save_score():
             highscores = highscores.groupby(["Name","Difficulty"], as_index=False).max()
             window.close()
             break
+        elif event == 'Cancel':
+            break;
+    window.close()
 
 def view_high_scores():
     #convert df to list

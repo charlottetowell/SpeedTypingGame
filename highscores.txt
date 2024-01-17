@@ -1,4 +1,8 @@
 Name|Difficulty|Level
+Brandon|Easy|19
 Charlotte|Easy|22
-Charlotte|Hard|10
+Charlotte|Hard|12
 Charlotte|Normal|24
+Terry|Easy|20
+Terry|Normal|10
+emily|Easy|8
